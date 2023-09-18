@@ -3159,3 +3159,286 @@ This is the content of Section 1.
 ## <a id="section-2"></a>Section 2
 This is the content of Section 2.
 [Section 1](#section-1)
+
+
+
+ 
+<h1>Code for create readme file
+</h1>
+
+```html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Code Editor</title>
+    <style>
+   button{
+     
+   }
+        /* Define styles for different elements */
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  
+
+    <!-- Create buttons for different actions -->
+    <button id="addMainHeading" class="btn btn-primary">Add Main Heading</button>
+    <button id="addSubHeading" class="btn btn-primary">Add Sub Heading</button>
+    <button id="addHR" class="btn btn-primary">Add HR</button>
+    <button id="addBR" class="btn btn-primary">Add BR</button>
+    <button id="addCode" class="btn btn-primary">Add Code</button>
+    <button id="addLink" class="btn btn-primary">Add Link</button>
+   
+<br>
+<br>
+    <!-- Output area to display the generated code -->
+    <!--.........box html start..........-->
+<div style="width: 90vw; margin: 0 auto; position: relative; display: flex; flex-wrap: nowrap; margin-bottom: 20px; border: 2px solid gray; background: #f5f5f5; overflow-x: auto; border-radius: 10px; background: #000; height: 40vh;color: white;">
+  <pre style="margin: 0; color: white; padding: 0;" id="output" >
+ </pre>
+  </span>
+  <button class="copy-button" style="position: sticky; top: 10px; right: 10px; height: 25px; padding: 4px 8px; border: none; border-radius: 4px; background-color: #007bff; color: #fff; cursor: pointer;" onclick="copyResponseText(this)">Copy</button>
+</div>
+<!--.........Box html End...........-->
+<!--............box javascript start........-->
+<script>
+  function copyResponseText(button) {
+    const responseTextElement = button.previousElementSibling;
+    const textToCopy = responseTextElement.innerText;
+  
+    const tempTextArea = document.createElement('textarea');
+    tempTextArea.value = textToCopy;
+    document.body.appendChild(tempTextArea);
+  
+    tempTextArea.select();
+    document.execCommand('copy');
+  
+    document.body.removeChild(tempTextArea);
+  
+    button.innerText = 'Copied!';
+    setTimeout(() => {
+      button.innerText = 'Copy';
+    }, 2000);
+  }
+</script>
+<!--..........box javascript end........-->
+
+
+    <!-- Modal for user input -->
+    <div class="modal" tabindex="-1" role="dialog" id="customInputModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Enter Content</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <textarea id="userInput" class="form-control" placeholder="Enter content"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="okButton">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Code and Link input modals -->
+    <div class="modal" tabindex="-1" role="dialog" id="codeInputModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Enter HTML Code</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <textarea id="codeInput" class="form-control" placeholder="Enter HTML code"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="codeOkButton">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" role="dialog" id="linkInputModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Enter Link Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="linkTitle" class="form-control" placeholder="Link Title">
+                    <input id="linkURL" class="form-control" placeholder="Link URL">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="linkOkButton">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS library -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Your JavaScript code -->
+    <script>
+        // Get the output div
+        const outputDiv = document.getElementById("output");
+
+        // Function to create custom input modal and handle user input
+        function createCustomInput(tag) {
+            const modal = document.getElementById("customInputModal");
+            const userInput = document.getElementById("userInput");
+            const okButton = document.getElementById("okButton");
+
+            // Show the modal
+            $(modal).modal('show');
+
+            // Handle the "OK" button click
+            okButton.onclick = function () {
+                const content = userInput.value;
+                if (content.trim() !== "") {
+                    // Add a line break if the output area is not empty
+                    if (outputDiv.innerHTML !== "") {
+                        outputDiv.appendChild(document.createElement("br"));
+                    }
+                    outputDiv.appendChild(document.createTextNode(`<${tag}>${content}</${tag}>`));
+                    if (outputDiv.innerHTML !== "") {
+                        outputDiv.appendChild(document.createElement("br"));
+                    }
+                }
+
+                // Close the modal and clear the textarea
+                $(modal).modal('hide');
+                userInput.value = "";
+            };
+        }
+
+        // Add click event listeners for the buttons
+        document.getElementById("addMainHeading").addEventListener("click", function () {
+            createCustomInput("h1");
+        });
+
+        document.getElementById("addSubHeading").addEventListener("click", function () {
+            createCustomInput("h2");
+        });
+
+        // Function to handle "Add HR" button
+        document.getElementById("addHR").addEventListener("click", function () {
+            // Add HR tag in text format
+            if (outputDiv.innerHTML !== "") {
+                outputDiv.appendChild(document.createElement("br"));
+            }
+            outputDiv.appendChild(document.createTextNode("<hr>"));
+            if (outputDiv.innerHTML !== "") {
+                outputDiv.appendChild(document.createElement("br"));
+            }
+        });
+
+        // Function to handle "Add BR" button
+        document.getElementById("addBR").addEventListener("click", function () {
+            // Add BR tag in text format
+            if (outputDiv.innerHTML !== "") {
+                outputDiv.appendChild(document.createElement("br"));
+            }
+            outputDiv.appendChild(document.createTextNode("<br>"));
+            if (outputDiv.innerHTML !== "") {
+                outputDiv.appendChild(document.createElement("br"));
+            }
+        });
+
+        // Add click event listener for the "Add Code" button
+        document.getElementById("addCode").addEventListener("click", function () {
+            const codeInputModal = document.getElementById("codeInputModal");
+            const codeInput = document.getElementById("codeInput");
+            const codeOkButton = document.getElementById("codeOkButton");
+
+            // Show the code input modal
+            $(codeInputModal).modal('show');
+
+            // Handle the "OK" button click for code input
+            codeOkButton.onclick = function () {
+                const codeContent = codeInput.value;
+                if (codeContent.trim() !== "") {
+                    // Add a line break if the output area is not empty
+                    if (outputDiv.innerHTML !== "") {
+                        outputDiv.appendChild(document.createElement("br"));
+                    }
+
+                    // Add triple backticks and a line break before the code
+                    outputDiv.appendChild(document.createTextNode("```html"));
+                    outputDiv.appendChild(document.createElement("br"));
+                    outputDiv.appendChild(document.createElement("br")); // One line gap
+
+                    // Split the code by line and add each line
+                    const lines = codeContent.split("\n");
+                    for (const line of lines) {
+                        outputDiv.appendChild(document.createTextNode(line));
+                        outputDiv.appendChild(document.createElement("br"));
+                    }
+
+                    // Add triple backticks and a line break after the code
+                    outputDiv.appendChild(document.createElement("br"));
+                    outputDiv.appendChild(document.createTextNode("```"));
+                    outputDiv.appendChild(document.createElement("br"));
+                    outputDiv.appendChild(document.createElement("br")); // One line gap
+                }
+
+                // Close the code input modal and clear the textarea
+                $(codeInputModal).modal('hide');
+                codeInput.value = "";
+            };
+        });
+
+        // Add click event listener for the "Add Link" button
+        document.getElementById("addLink").addEventListener("click", function () {
+            const linkInputModal = document.getElementById("linkInputModal");
+            const linkTitleInput = document.getElementById("linkTitle");
+            const linkURLInput = document.getElementById("linkURL");
+            const linkOkButton = document.getElementById("linkOkButton");
+
+            // Show the link input modal
+            $(linkInputModal).modal('show');
+
+            // Handle the "OK" button click for link input
+            linkOkButton.onclick = function () {
+                const linkTitle = linkTitleInput.value;
+                const linkURL = linkURLInput.value;
+                if (linkTitle.trim() !== "" && linkURL.trim() !== "") {
+                    // Add a line break if the output area is not empty
+                    if (outputDiv.innerHTML !== "") {
+                        outputDiv.appendChild(document.createElement("br"));
+                    }
+                    outputDiv.innerHTML += `<a href="${linkURL}">${linkTitle}</a><br>`;
+                }
+
+                // Close the link input modal and clear the input fields
+                $(linkInputModal).modal('hide');
+                linkTitleInput.value = "";
+                linkURLInput.value = "";
+            };
+        });
+    </script>
+</body>
+</html>
+
+
+```
+
+
