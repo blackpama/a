@@ -3158,3 +3158,4 @@ This is the content of Section 1.
 ````
 ## <a id="section-2"></a>Section 2
 This is the content of Section 2.
+[Section 1](#section-1)
